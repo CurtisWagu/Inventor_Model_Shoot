@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+    <assemblyIdentity name="Inventor_Model_Shoot" version="1.0.0.0"></assemblyIdentity>
+
+    <clrClass clsid="{32CB0A74-E71D-4F44-B07C-816B2F33030E}" progid="Inventor_Model_Shoot.StandardAddInServer" threadingModel="Both" name="Inventor_Model_Shoot.Inventor_Model_Shoot.StandardAddInServer" runtimeVersion=""></clrClass>
+
+    <file name="Inventor_Model_Shoot.dll" hashalg="SHA1"></file>
+
+</assembly>

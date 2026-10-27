@@ -1,0 +1,117 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Inventor Versions -->
+  <PropertyGroup>
+    <!-- Compile against the OLDEST Inventor we support. The Inventor interop is embedded in the
+         add-in, so a build against this version also runs on newer versions of Inventor. -->
+    <InteropVersion>2025</InteropVersion>
+    <!-- Which installed Inventor starts when you press F5 in Visual Studio. -->
+    <DebugInventorVersion>2027</DebugInventorVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <!-- Need 'StartAction' & 'StartProgram' To Debug 'Library' 'OutputType' -->
+    <OutputType>Library</OutputType>
+    <StartAction>Program</StartAction>
+    <!-- For Debugging Inventor Extension: Primary Method -->
+    <StartProgram>$(ProgramFiles)\Autodesk\Inventor $(DebugInventorVersion)\Bin\Inventor.exe</StartProgram>
+
+    <AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+    <Description>$(MSBuildProjectName)</Description>
+    <Company>Topper Floats</Company>
+    <Product>$(MSBuildProjectName)</Product>
+    <Copyright>Copyright © 2026</Copyright>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0</FileVersion>
+
+    <!-- SDK-Style Project Properties -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDependencyFile>true</GenerateDependencyFile>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+
+    <!-- Nuget Package Library Files May Not Copy To Output Path Without This -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!-- Nuget Packages -->
+  <ItemGroup>
+    <PackageReference Include="stdole" Version="17.14.40260" />
+  </ItemGroup>
+
+  <!-- Assembly References -->
+  <ItemGroup>
+    <Reference Include="Autodesk.Inventor.Interop">
+      <HintPath>$(ProgramFiles)\Autodesk\Inventor $(InteropVersion)\Bin\Public Assemblies\Autodesk.Inventor.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+
+  <!-- File References -->
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <!-- Icons: each .ico holds several sizes; IconLoader picks the one it needs. -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**\*.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PackageContents.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Autodesk.$(MSBuildProjectName).Inventor.addin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildProjectName).X.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="README.md" />
+  </ItemGroup>
+
+  <!--
+  This 'PropertyGroup' section specifies where the Autodesk Inventor addin is being installed by the build target.
+  Uncomment the appropriate line for your needs. For more information, see the documentation:
+  https://help.autodesk.com/view/INVNTOR/2026/ENU/?guid=GUID-52422162-1784-4E8F-B495-CDB7BE9987AB
+  -->
+  <PropertyGroup>
+    <!-- All Users, Version Independent -->
+    <!--<AddinOutputPath>$(ProgramData)\Autodesk\Inventor Addins</AddinOutputPath>-->
+
+    <!-- (2024+) All Users, Version Dependent, Trusted Location (Requires Admin) -->
+    <!--<AddinOutputPath>$(ProgramFiles)\Autodesk\Inventor 20xx\Bin\Addins</AddinOutputPath>-->
+
+    <!-- (2023-) All Users, Version Dependent -->
+    <!--<AddinOutputPath>$(ProgramData)\Autodesk\Inventor 20xx\Addins</AddinOutputPath>-->
+    
+    <!-- Per User, Version Independent: one install that every supported Inventor version loads -->
+    <AddinOutputPath>$(AppData)\Autodesk\ApplicationPlugins</AddinOutputPath>
+
+    <!-- Per User, Version Dependent -->
+    <!--<AddinOutputPath>$(AppData)\Autodesk\Inventor $(DebugInventorVersion)\Addins</AddinOutputPath>-->
+  </PropertyGroup>
+
+  <!-- This 'Target' section acts as the post-clean events. The newer 'SDK-style' version of a .target file. -->
+  <Target Name="CleanAddinOutputPath" AfterTargets="Clean">
+    <RemoveDir Directories="$(AddinOutputPath)\$(MSBuildProjectName).bundle\" />
+  </Target>
+
+  <!-- This 'Target' section acts as the post-build events. The newer 'SDK-style' version of a .target file. -->
+  <Target Name="BuildAddinOutputPath" AfterTargets="Build">
+    <!-- Legacy: remove the earlier Inventor 2027 only install so two copies never load. Safe to delete this line later. -->
+    <RemoveDir Directories="$(AppData)\Autodesk\Inventor 2027\Addins\$(MSBuildProjectName).bundle\" />
+    <Copy SourceFiles="$(ProjectDir)PackageContents.xml" DestinationFolder="$(AddinOutputPath)\$(MSBuildProjectName).bundle\" />
+    <ItemGroup>
+      <AddinBundle Include="$(TargetDir)**\*" Exclude="$(TargetDir)PackageContents.xml" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AddinBundle)" DestinationFolder="$(AddinOutputPath)\$(MSBuildProjectName).bundle\Contents\%(RecursiveDir)" />
+  </Target>
+
+</Project>

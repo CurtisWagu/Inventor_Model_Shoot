@@ -1,0 +1,8 @@
+# Let git normalize line endings; keep Windows-style endings for source files.
+* text=auto
+*.vb text eol=crlf
+*.vbproj text eol=crlf
+*.slnx text eol=crlf
+*.resx text eol=crlf
+*.png binary
+*.ico binary

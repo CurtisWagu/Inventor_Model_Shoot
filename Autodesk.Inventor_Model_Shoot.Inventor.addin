@@ -1,0 +1,14 @@
+<Addin Type="Standard">
+    <!--Inventor 2025 (version 29) and newer-->
+    <ClassId>{32CB0A74-E71D-4F44-B07C-816B2F33030E}</ClassId>
+    <ClientId>{32CB0A74-E71D-4F44-B07C-816B2F33030E}</ClientId>
+    <DisplayName>Model Shoot</DisplayName>
+    <Description>Capture, name and email screenshots of the active model.</Description>
+    <Assembly>Inventor_Model_Shoot.dll</Assembly>
+    <LoadOnStartUp>1</LoadOnStartUp>
+    <UserUnloadable>1</UserUnloadable>
+    <Hidden>0</Hidden>
+    <SupportedSoftwareVersionGreaterThan>28..</SupportedSoftwareVersionGreaterThan>
+    <DataVersion>1</DataVersion>
+    <UserInterfaceVersion>1</UserInterfaceVersion>
+</Addin>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationPackage SchemaVersion="1.0" Version="1.0" ProductCode="{32CB0A74-E71D-4F44-B07C-816B2F33030E}" Name="Inventor_Model_Shoot" Description="Model Shoot - screenshot tool" Author="Topper Floats">
+  <CompanyDetails Name="Topper Floats" />
+  <Components>
+    <!-- For Inventor Engine, "Platform" attribute must be "Inventor" -->
+    <RuntimeRequirements  OS="Win64" Platform="Inventor" />
+
+    <!-- For Inventor Plug-in, the "Module" attribute must point to the .addin manifest file. -->
+    <ComponentEntry
+			LoadOnAutoCADStartup="False"
+			LoadOnCommandInvocation="False"
+			AppDescription="Model Shoot - screenshot tool"
+			ModuleName="./Contents/Autodesk.Inventor_Model_Shoot.Inventor.addin"
+			AppName="Inventor_Model_Shoot"/>
+  </Components>
+  <EnvironmentVariables>
+  </EnvironmentVariables>
+</ApplicationPackage>

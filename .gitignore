@@ -1,0 +1,21 @@
+# Visual Studio and build output
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Packages
+packages/
+*.nupkg
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
