@@ -4,8 +4,6 @@ A small add-in for Autodesk Inventor that captures screenshots of the active mod
 
 **Works with Inventor 2025, 2026 and 2027** (Windows, 64-bit).
 
-**Download and source code:** <https://github.com/CurtisWagu/Inventor_Model_Shoot>
-
 **PDF version of this guide:** [Inventor_Model_Shoot_Help.pdf](docs/Inventor_Model_Shoot_Help.pdf)
 
 ![The Model Shoot window](docs/images/model-shoot-window.png)
@@ -146,6 +144,7 @@ To switch it off without deleting it, use **Tools > Add-Ins > Add-In Manager** i
 ## Build and modify the source code
 
 This section is for people who want to change the add-in for their own use.
+**Download and source code:** <https://github.com/CurtisWagu/Inventor_Model_Shoot>
 
 ### What you need
 
